@@ -1,0 +1,22 @@
+{
+  "name": "crawler-lab",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@9.12.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev:backend": "pnpm --filter @crawler-lab/backend dev",
+    "dev:worker": "pnpm --filter @crawler-lab/worker dev",
+    "dev:frontend": "pnpm --filter @crawler-lab/frontend dev",
+    "build:backend": "pnpm --filter @crawler-lab/backend build",
+    "build:worker": "pnpm --filter @crawler-lab/worker build",
+    "build:frontend": "pnpm --filter @crawler-lab/frontend build",
+    "build:db": "pnpm --filter @crawler-lab/db build",
+    "build:all": "pnpm build:db && pnpm -r --parallel --filter='./apps/*' build",
+    "prisma:generate": "pnpm --filter @crawler-lab/db prisma:generate",
+    "prisma:migrate": "pnpm --filter @crawler-lab/db prisma:migrate",
+    "prisma:studio": "pnpm --filter @crawler-lab/db prisma:studio"
+  }
+}
