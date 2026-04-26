@@ -3,9 +3,14 @@
 
 FROM node:20-alpine AS deps
 RUN corepack enable && corepack prepare pnpm@9.12.0 --activate
+# Placeholder so the workspace-wide `prisma generate` (db's prepare hook)
+# can validate the schema during install.
+ENV DATABASE_URL="postgresql://build:build@localhost:5432/build?schema=public"
 WORKDIR /repo
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
-COPY packages/db/package.json ./packages/db/
+# packages/db has a `prepare` hook that pnpm runs across the whole workspace,
+# so include its schema + source even though the frontend doesn't use it.
+COPY packages/db ./packages/db
 COPY apps/backend/package.json ./apps/backend/
 COPY apps/worker/package.json ./apps/worker/
 COPY apps/frontend/package.json ./apps/frontend/
